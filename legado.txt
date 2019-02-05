@@ -1,0 +1,108 @@
+
+
+**************************************** FOTOS-CONTROLLER.JS ********************************************
+
+
+    $http.get('v1/fotos')
+    .success(function(fotos){
+        $scope.fotos = fotos
+    })
+    .error(function(erro){
+        console.log(erro)
+    })
+
+    
+    var promisse = $http.get('v1/fotos');
+    promisse.then(function(retorno){
+        $scope.fotos = retorno.data
+    }).catch(function(error){
+        console.log(error)
+    })
+    
+
+    
+    $http.delete('/v1/fotos/' + foto._id)
+    .success(function(){
+        var indiceFoto = $scope.fotos.indexOf(foto)
+        $scope.fotos.splice(indiceFoto, 1)
+        $scope.mensagem = 'Foto ' + foto.titulo + ' foi removido com sucesso!'
+    })
+    .error(function(erro){
+        console.log(erro)
+        $scope.mensagem = 'Não foi possível remover a foto ' + foto.titulo    
+    })
+        
+
+**************************************** FOTO-CONTROLLER.JS ********************************************
+/*
+    if($scope.foto._id){
+        recursoFoto.update({fotoId: $scope.foto._id}, $scope.foto, function(){
+            $scope.mensagem = 'Foto ' +  $scope.foto.titulo + ' alterada com sucesso!'
+        }, function(erro){
+            $scope.mensagem = 'Não foi possível alterar a foto.' + $scope.foto.titulo
+        });
+        
+  
+        $http.put('v1/fotos/' + $scope.foto._id, $scope.foto)
+        .success(function(){
+            $scope.mensagem = 'Foto ' +  $scope.foto.titulo + ' alterada com sucesso!'
+        })
+        .error(function(erro){
+            $scope.mensagem = 'Não foi possível alterar a foto.' + $scope.foto.titulo
+        })
+        
+
+    } else {
+
+        recursoFoto.save($scope.foto, function(){
+            $scope.foto = {}
+            $scope.mensagem = 'Foto cadastrada com sucesso!'        
+        }, function(erro){
+            console.log(erro)
+            $scope.mensagem = 'Não foi possível incluir a foto.'    
+        })
+
+        
+        $http.post('v1/fotos/', $scope.foto)
+        .success(function(){
+            $scope.foto = {}
+            $scope.mensagem = 'Foto cadastrada com sucesso!'
+        })
+        .error(function(erro){
+            $scope.mensagem = 'Não foi possível incluir a foto.'
+        })
+        
+    }
+    } else {
+    console.log('Fomulário inválido.')
+*/
+
+
+**************************************** DIRETIVAS.JS ********************************************
+.directive('sysFocus', function(){
+    var ddo = {}
+    ddo.restric = 'A'
+    
+    /*
+    ddo.scope = {
+        focado: '='
+    }
+    */
+
+    ddo.link = function(scope, element){
+        
+        scope.$on('fotoCadastrada', function(){
+            element[0].focus()
+        })
+        /*
+        scope.$watch('focado', function(){
+            if(scope.focado) {
+                element[0].focus()
+                scope.focado = false
+            }
+        })
+        */
+    }
+
+    return ddo
+})
